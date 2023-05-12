@@ -53,28 +53,49 @@ if (!$conn) {
     </div>
     <div id="tables">
         <div id="table1" class="table-container">
-            <table border="1">
-                <tr>
-                    <th>Team ID</th>
-                    <th>Team Name</th>
-                    <th>Division</th>
-                </tr>
-                <?php
-                $sql = "SELECT tid, tname, division FROM Teams";
-                $stid = oci_parse($conn, $sql);
-                
-                oci_execute($stid);
-                
-                while ($row = oci_fetch_array($stid, OCI_ASSOC + OCI_RETURN_NULLS)) {
-                    echo "<tr>\n";
-                    foreach ($row as $item) {
-                        echo "    <td>" . ($item !== null ? htmlentities($item, ENT_QUOTES) : "&nbsp;") . "</td>\n";
-                    }
-                    echo "</tr>\n";
-                }
-                oci_free_statement($stid);
-                ?>
-            </table>
+        <table>
+  <thead>
+    <tr>
+      <th>Team</th>
+      <th>W</th>
+      <th>L</th>
+      <th>PCT</th>
+      <th>GB</th>
+      <th>Conf</th>
+      <th>Div</th>
+      <th>Home</th>
+      <th>Away</th>
+      <th>Last 10</th>
+      <th>Streak</th>
+    </tr>
+  </thead>
+  <tbody>
+    <?php
+    $sql = "SELECT tid, tname, division FROM Teams";
+    $stid = oci_parse($conn, $sql);
+
+    oci_execute($stid);
+
+    while ($row = oci_fetch_array($stid, OCI_ASSOC + OCI_RETURN_NULLS)) {
+      echo "<tr>\n";
+      echo "<td>" . ($row['TNAME'] !== null ? htmlentities($row['TNAME'], ENT_QUOTES) : "&nbsp;") . "</td>\n";
+      echo "<td>&nbsp;</td>\n";
+      echo "<td>&nbsp;</td>\n";
+      echo "<td>&nbsp;</td>\n";
+      echo "<td>&nbsp;</td>\n";
+      echo "<td>&nbsp;</td>\n";
+      echo "<td>" . ($row['DIVISION'] !== null ? htmlentities($row['DIVISION'], ENT_QUOTES) : "&nbsp;") . "</td>\n";
+      echo "<td>&nbsp;</td>\n";
+      echo "<td>&nbsp;</td>\n";
+      echo "<td>&nbsp;</td>\n";
+      echo "<td>&nbsp;</td>\n";
+      echo "</tr>\n";
+    }
+    oci_free_statement($stid);
+    ?>
+  </tbody>
+</table>
+
         </div>
         <div id="table2" class="table-container">
             <table border="1">
